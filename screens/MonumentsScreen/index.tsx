@@ -18,6 +18,10 @@ const maxWidth = Dimensions.get("window").width;
 const maxHeight = Dimensions.get("window").height;
 
 const MonumentsScreen = ({ navigation }: any) => {
+
+    const [data, setData] = useState({});
+    const [modalOpen, setModalOpen] = useState(false);
+    
     return (
         <View style={styles.container}>
             {/* filter field : */}
@@ -68,7 +72,10 @@ const MonumentsScreen = ({ navigation }: any) => {
                                     <Text style={styles.textDesc} numberOfLines={3}>
                                         {item?.description}
                                     </Text>
-                                    <TouchableOpacity style={styles.plusBtn}>
+                                    <TouchableOpacity style={styles.plusBtn} onPress={() => {
+                                        setData(item);
+                                        setModalOpen(true);
+                                    }}>
                                         <Text style={styles.plusText}>Lire plus</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -79,6 +86,38 @@ const MonumentsScreen = ({ navigation }: any) => {
                     />
                 </View>
             </ScrollView>
+            <Modal
+                transparent
+                animationType="slide"
+                visible={modalOpen}
+                onRequestClose={() => setModalOpen(false)}
+                onDismiss={() => setModalOpen(false)}
+            >
+                <View style={styles.modalContaier}>
+                    {/* modal header : */}
+                    <View style={styles.headerModal}>
+                        <TouchableOpacity onPress={() => setModalOpen(false)}>
+                            <Image style={styles.imageModal} source={require("../../assets/icons/back.png")} />
+                        </TouchableOpacity>
+                        <Text style={styles.titleModal}>
+                            {data?.name}
+                        </Text>
+                    </View>
+                    {/* modal body : */}
+                    <View style={styles.modalBody}>
+                        {/* image view : */}
+                        <View style={styles.imgModalContainer}>
+                            <Image style={styles.imageMonumentModal} source={require("../../assets/images/essaouira-monument-1.png")} />
+                        </View>
+                        {/* description field : */}
+                        <View style={styles.textModalContainer}>
+                            <Text style={styles.textMonumentModal}>
+                                {data?.description}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
@@ -112,21 +151,30 @@ const styles = StyleSheet.create({
     },
     monumentContainer: {
         width: maxWidth / 1.1,
-        // backgroundColor: "#7210ff",
+        // backgroundColor: "#fff",
         marginTop: 6,
         marginBottom: 6,
         flexDirection: "row",
         // borderColor: "#000",
         // borderWidth: 1,
         borderRadius: 20,
-        padding: 6,
+        padding: 2,
         // put shadow here :
+        elevation: 1,
+        // shadowOpacity: 0.20,
+        // shadowRadius: 1.84,
+        shadowColor: "#fff",
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 1,
+        // },
     },
     monumentTotal: {
         // width: maxWidth / 2,
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",
+        marginBottom: maxWidth / 3,
     },
     monumentField: {
         marginBottom: 10,
@@ -148,7 +196,7 @@ const styles = StyleSheet.create({
         color: "#000",
     },
     textDesc: {
-        width: "20%",
+        width: maxWidth / 2,
     },
     plusBtn: {
         backgroundColor: "#fff",
@@ -158,9 +206,69 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderColor: "#7210ff",
         borderWidth: 1,
+        marginTop: 6,
     },
     plusText: {
         color: "#7210ff",
+        fontWeight: "bold",
+        fontSize: 12,
+    },
+    modalContaier: {
+        height: maxHeight / 1.24,
+        backgroundColor: "#f1f1f1",
+        bottom: 0,
+        position: "absolute",
+        width: maxWidth,
+        borderTopEndRadius: 20,
+        borderTopStartRadius: 20,
+        // margin: 10,
+        // borderColor: "red",
+        // borderWidth: 2
+    },
+    headerModal: {
+        flexDirection: "row",
+        margin: 12,
+        paddingLeft: 10,
+        paddingRight: 10,
+        alignItems: "center",
+    },
+    imageModal: {
+        height: maxWidth / 14,
+        width: maxWidth / 14,
+    },
+    titleModal: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#000",
+        paddingLeft: 12,
+    },
+    modalBody: {
+        // backgroundColor: "red",
+        marginTop: 8,
+    },
+    imgModalContainer: {
+        // backgroundColor: "red",
+        // alignContent: "center",
+        // justifyContent: "center",
+        alignItems: "center",
+    },
+    imageMonumentModal: {
+        width: maxWidth / 1.08,
+        height: maxWidth / 2,
+        borderRadius: 12,
+    },
+    textModalContainer: {
+        width: maxWidth / 1.1,
+        // alignItems: "center",
+        // backgroundColor: "red",
+        // justifyContent: "center",
+        // alignContent: "center",
+        alignSelf: "center",
+        marginTop: maxWidth / 16,
+    },
+    textMonumentModal: {
+        // textAlign: "center",
+        fontSize: 14,
         fontWeight: "bold",
     },
 });
