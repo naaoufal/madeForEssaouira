@@ -32,6 +32,7 @@ const StackContainer = () => {
                 headerBackground: () => (
                     <View style={styles.homeScreen}></View>
                 ),
+                headerTintColor: "#fff",
             }} name="Monuments" component={MonumentsScreen} />
         </Stack.Navigator>
     );
@@ -40,7 +41,7 @@ const StackContainer = () => {
 const styles = StyleSheet.create({
     homeScreen: {
         backgroundColor: "#7210ff",
-        height: maxWidth / 7.4,
+        height: maxWidth / 6.6,
     },
 });
 
