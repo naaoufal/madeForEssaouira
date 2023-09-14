@@ -13,6 +13,7 @@ import React, {
 } from "react-native";
 import { DATA } from "../../utils/datas/data";
 import { MONUMENTS } from "../../utils/datas/monuments";
+import { Suggestion } from "../../utils/datas/suggestions";
 
 const maxWidth = Dimensions.get("window").width;
 const maxHeight = Dimensions.get("window").height;
@@ -91,6 +92,52 @@ const HomeScreen = ({ navigation }: any) => {
                         />
                     </View>
                 </View>
+                <View style={styles.suggestionField}>
+                    {/* Suggestion header */}
+                    <View style={styles.headerField}>
+                        <Text style={styles.rightHeader}>Suggestions</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("Monuments")}>
+                            <Text style={styles.lefttHeader}>Voir plus</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/* Suggestions body */}
+                    <View style={{
+                        // marginBottom: 200,
+                        marginTop: 10,
+                        // flex: 1,
+                    }}>
+                        {/* {Suggestion?.map((item: any) => (
+                            <View>
+                                <Text>
+                                    {item?.name}
+                                </Text>
+                            </View>
+                        ))} */}
+                        <FlatList 
+                            data={Suggestion}
+                            renderItem={({item}: any ) => (
+                                <TouchableOpacity style={styles.suggestionContainer}>
+                                    <Image style={styles.imgSuggestion} source={require("../../assets/images/meal.jpg")} />
+                                    <View style={{
+                                        marginBottom: 10,
+                                        marginTop: 10,
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 14,
+                                            fontWeight: "bold",
+                                            color: "#000",
+                                        }}>
+                                            {item?.name}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                            numColumns={2}
+                            contentContainerStyle={styles.suggestionFlat}
+                            keyExtractor={item => item?.id}
+                        />
+                    </View>
+                </View>
             </ScrollView>
             {/* modals : */}
             <Modal 
@@ -134,7 +181,7 @@ const HomeScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        height: maxHeight,
+        // height: maxHeight,
         alignItems: "center",
     },
     subContainer: {
@@ -216,6 +263,9 @@ const styles = StyleSheet.create({
         width: maxWidth / 1.08,
         // backgroundColor: "green",
     },
+    suggestionField: {
+        width: maxWidth / 1.08,
+    },
     categories: {
         width: maxWidth / 6,
         // padding: 10,
@@ -283,6 +333,30 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#000",
         paddingLeft: 12,
+    },
+    suggestionFlat: {
+        // backgroundColor: "red",
+        // width: maxWidth / 1.08,
+        // height: maxHeight / 2,
+        paddingBottom: 10,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    suggestionContainer: {
+        // width: maxWidth / 1.9,
+        margin: 4,
+        // padding: 8,
+        // backgroundColor: "green",
+        // borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        alignContent: "center",
+    },
+    imgSuggestion: {
+        width: maxWidth / 2.2,
+        height: maxWidth / 3.2,
+        borderRadius: 12,
     },
 });
 
