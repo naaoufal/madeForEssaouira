@@ -11,7 +11,7 @@ export const Suggestion = [
     },
     {
         id: 3,
-        name: "Restaurant Ahmed",
+        name: "Restaurant Naoufal",
         desc: "Excepteur pariatur eiusmod reprehenderit do esse nostrud minim proident magna aliqua adipisicing adipisicing dolore ad."
     },
     {
