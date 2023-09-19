@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import SignUp from '../../screens/SignUpScreen';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import MonumentsScreen from '../../screens/MonumentsScreen';
+import FoodScreen from '../../screens/FoodScreen';
 
 const maxWidth = Dimensions.get("window").width;
 const maxHeight = Dimensions.get("window").height;
@@ -25,15 +26,24 @@ const StackContainer = () => {
             <Stack.Screen options={{
                 headerShown: false,
             }} name="LogIn" component={LogIn} />
+            {/* signUp screen */}
             <Stack.Screen options={{
                 headerShown: false,
             }} name="SignUp" component={SignUp} />
+            {/* monuments screen */}
             <Stack.Screen options={{
                 headerBackground: () => (
                     <View style={styles.homeScreen}></View>
                 ),
                 headerTintColor: "#fff",
             }} name="Monuments" component={MonumentsScreen} />
+            {/* food screen */}
+            <Stack.Screen options={{
+                headerBackground: () => (
+                    <View style={styles.homeScreen}></View>
+                ),
+                headerTintColor: "#fff",
+            }} name="Food" component={FoodScreen} />
         </Stack.Navigator>
     );
 }
