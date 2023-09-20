@@ -98,7 +98,7 @@ const HomeScreen = ({ navigation }: any) => {
                     {/* Suggestion header */}
                     <View style={styles.headerField}>
                         <Text style={styles.rightHeader}>Suggestions</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("Monuments")}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Food")}>
                             <Text style={styles.lefttHeader}>Voir plus</Text>
                         </TouchableOpacity>
                     </View>
