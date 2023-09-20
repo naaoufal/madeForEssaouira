@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React, {
     View,
     Text,
@@ -14,9 +14,13 @@ import React, {
 import { DATA } from "../../utils/datas/data";
 import { MONUMENTS } from "../../utils/datas/monuments";
 import { Suggestion } from "../../utils/datas/suggestions";
+import Realm from "realm";
 
 const maxWidth = Dimensions.get("window").width;
 const maxHeight = Dimensions.get("window").height;
+
+const app = new Realm.App({ id: "realm-zaqqb" });
+const credentials = Realm.Credentials.anonymous();
 
 
 const HomeScreen = ({ navigation }: any) => {
@@ -24,6 +28,10 @@ const HomeScreen = ({ navigation }: any) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalSugg, setModalSugg] = useState(false);
     const [suggData, setSuggData] = useState({});
+
+    useEffect(() => {
+        console.log(credentials);
+    }, []);
 
     return (
         <>
