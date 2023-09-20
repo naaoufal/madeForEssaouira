@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React, {
     View,
     Text,
@@ -13,14 +13,25 @@ import React, {
 } from "react-native";
 import { DATA } from "../../utils/datas/data";
 import { MONUMENTS } from "../../utils/datas/monuments";
+import { Suggestion } from "../../utils/datas/suggestions";
+import Realm from "realm";
 
 const maxWidth = Dimensions.get("window").width;
 const maxHeight = Dimensions.get("window").height;
+
+const app = new Realm.App({ id: "realm-zaqqb" });
+const credentials = Realm.Credentials.anonymous();
 
 
 const HomeScreen = ({ navigation }: any) => {
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalSugg, setModalSugg] = useState(false);
+    const [suggData, setSuggData] = useState({});
+
+    useEffect(() => {
+        console.log(credentials);
+    }, []);
 
     return (
         <>
@@ -91,6 +102,51 @@ const HomeScreen = ({ navigation }: any) => {
                         />
                     </View>
                 </View>
+                <View style={styles.suggestionField}>
+                    {/* Suggestion header */}
+                    <View style={styles.headerField}>
+                        <Text style={styles.rightHeader}>Suggestions</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("Food")}>
+                            <Text style={styles.lefttHeader}>Voir plus</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/* Suggestions body */}
+                    <View style={{
+                        // marginBottom: 200,
+                        marginTop: 10,
+                        // flex: 1,
+                    }}>
+                        {/* {Suggestion?.map((item: any) => (
+                            <View>
+                                <Text>
+                                    {item?.name}
+                                </Text>
+                            </View>
+                        ))} */}
+                        <FlatList 
+                            data={Suggestion}
+                            renderItem={({item}: any ) => (
+                                <TouchableOpacity style={styles.suggestionContainer} onPress={() => {
+                                    setSuggData(item);
+                                    setModalSugg(true);
+                                }}>
+                                    <Image style={styles.imgSuggestion} source={require("../../assets/images/meal.jpg")} />
+                                    <View style={{
+                                        marginBottom: 10,
+                                        marginTop: 10,
+                                    }}>
+                                        <Text style={styles.textSugg}>
+                                            {item?.name}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                            numColumns={2}
+                            contentContainerStyle={styles.suggestionFlat}
+                            keyExtractor={item => item?.id}
+                        />
+                    </View>
+                </View>
             </ScrollView>
             {/* modals : */}
             <Modal 
@@ -127,6 +183,39 @@ const HomeScreen = ({ navigation }: any) => {
                     </View>
                 </View>
             </Modal>
+            {/* Sugg Modal : */}
+            <Modal
+                transparent
+                animationType="slide"
+                visible={modalSugg}
+                onRequestClose={() => setModalSugg(false)}
+                onDismiss={() => setModalSugg(false)}
+            >
+                <View style={styles.modalSuggContainer}>
+                    {/* modal header : */}
+                    <View style={styles.headerModal}>
+                        <TouchableOpacity onPress={() => setModalSugg(false)}>
+                            <Image style={styles.imageModal} source={require("../../assets/icons/back.png")} />
+                        </TouchableOpacity>
+                        <Text style={styles.titleModal}>
+                            {suggData?.name}
+                        </Text>
+                    </View>
+                    {/* modal body : */}
+                    <View style={styles.modalBody}>
+                        {/* image view : */}
+                        <View style={styles.imgModalContainer}>
+                            <Image style={styles.imageMonumentModal} source={require("../../assets/images/meal.jpg")} />
+                        </View>
+                        {/* description field : */}
+                        <View style={styles.textModalContainer}>
+                            <Text style={styles.textMonumentModal}>
+                                {suggData?.desc}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </>
     );
 };
@@ -134,7 +223,7 @@ const HomeScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        height: maxHeight,
+        // height: maxHeight,
         alignItems: "center",
     },
     subContainer: {
@@ -216,6 +305,9 @@ const styles = StyleSheet.create({
         width: maxWidth / 1.08,
         // backgroundColor: "green",
     },
+    suggestionField: {
+        width: maxWidth / 1.08,
+    },
     categories: {
         width: maxWidth / 6,
         // padding: 10,
@@ -283,6 +375,69 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#000",
         paddingLeft: 12,
+    },
+    suggestionFlat: {
+        paddingBottom: 10,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    suggestionContainer: {
+        margin: 4,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        alignContent: "center",
+    },
+    imgSuggestion: {
+        width: maxWidth / 2.2,
+        height: maxWidth / 3.2,
+        borderRadius: 12,
+    },
+    textSugg: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "#000",
+    },
+    modalSuggContainer: {
+        height: maxHeight / 1.24,
+        backgroundColor: "#f1f1f1",
+        bottom: 0,
+        position: "absolute",
+        width: maxWidth,
+        borderTopEndRadius: 20,
+        borderTopStartRadius: 20,
+        // margin: 10,
+        // borderColor: "red",
+        // borderWidth: 2
+    },
+    modalBody: {
+        // backgroundColor: "red",
+        marginTop: 8,
+    },
+    imgModalContainer: {
+        // backgroundColor: "red",
+        // alignContent: "center",
+        // justifyContent: "center",
+        alignItems: "center",
+    },
+    imageMonumentModal: {
+        width: maxWidth / 1.08,
+        height: maxWidth / 2,
+        borderRadius: 12,
+    },
+    textModalContainer: {
+        width: maxWidth / 1.1,
+        // alignItems: "center",
+        // backgroundColor: "red",
+        // justifyContent: "center",
+        // alignContent: "center",
+        alignSelf: "center",
+        marginTop: maxWidth / 16,
+    },
+    textMonumentModal: {
+        // textAlign: "center",
+        fontSize: 14,
+        fontWeight: "bold",
     },
 });
 
