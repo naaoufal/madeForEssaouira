@@ -90,7 +90,19 @@ const HomeScreen = ({ navigation }: any) => {
                                 <View style={styles.categoryField}>
                                     <TouchableOpacity style={styles.categories}>
                                         <View style={styles.subCategories}>
-                                            <Image style={styles.imageCategory} source={require("../../assets/icons/assistance.png")} />
+                                            <Image style={styles.imageCategory} source={
+                                                item?.title === "Services" ?
+                                                require("../../assets/icons/assistance.png")
+                                                : item?.title === "Monuments" ?
+                                                require("../../assets/icons/monuments.png")
+                                                : item?.title === "Guide" ?
+                                                require("../../assets/icons/guide.png")
+                                                : item?.title === "Food" ?
+                                                require("../../assets/icons/food.png")
+                                                : item?.title === "Location" ?
+                                                require("../../assets/icons/location.png")
+                                                : null
+                                            } />
                                         </View>
                                     </TouchableOpacity>
                                     <Text style={styles.textCategory}>{item.title}</Text>
