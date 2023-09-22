@@ -6,6 +6,8 @@ import HomeScreen from '../../screens/HomeScreen';
 import LogIn from '../../screens/LogInScreen';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import MonumentsScreen from '../../screens/MonumentsScreen';
+import FoodScreen from '../../screens/FoodScreen';
 
 const maxWidth = Dimensions.get("window").width;
 const maxHeight = Dimensions.get("window").height;
@@ -35,7 +37,9 @@ const DrawerContainer = () => {
                     drawerActiveTintColor: "#7210ff",
                     headerTintColor: "#fff",
                 }} name="Accueil" component={HomeScreen} />
-                <Drawer.Screen name="test" component={LogIn} />
+                {/* <Drawer.Screen name="test" component={LogIn} /> */}
+                <Drawer.Screen name="Monuments" component={MonumentsScreen} />
+                <Drawer.Screen name="Food" component={FoodScreen} />
             </Drawer.Navigator>
         // </NavigationContainer>
     );
