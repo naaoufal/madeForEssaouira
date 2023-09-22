@@ -1,23 +1,24 @@
 export const DATA = [
     {
         id: 1,
-        title: 'Cat-1',
+        title: 'Services',
+        tag: "service"
     },
     {
         id: 2,
-        title: 'Cat-2',
+        title: 'Monuments',
     },
     {
         id: 3,
-        title: 'Cat-3',
+        title: 'Guide',
     },
     {
         id: 4,
-        title: 'Cat-4',
+        title: 'Food',
       },
       {
         id: 5,
-        title: 'Cat-5',
+        title: 'Location',
       },
       {
         id: 6,
